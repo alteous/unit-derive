@@ -2,6 +2,8 @@
 name = "unit-derive"
 version = "0.1.0"
 authors = ["Paul Ellenbogen <pe5@cs.princeton.edu>"]
+description = "Derive ops for newtype units in Rust."
+license = "MIT"
 
 [dependencies]
 syn = "0.10.5"
