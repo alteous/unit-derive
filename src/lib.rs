@@ -13,6 +13,11 @@ pub fn unit_add(input: TokenStream) -> TokenStream {
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
 
+    let gen = impl_unit_add(&ast);
+    gen.parse().unwrap()
+}
+
+fn impl_unit_add(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::Add for #name {
@@ -30,7 +35,7 @@ pub fn unit_add(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 #[proc_macro_derive(UnitAddAssign)]
@@ -41,6 +46,11 @@ pub fn unit_add_assign(input: TokenStream) -> TokenStream {
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
 
+    let gen = impl_unit_add_assign(&ast);
+    gen.parse().unwrap()
+}
+
+fn impl_unit_add_assign(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::AddAssign for #name {
@@ -55,7 +65,7 @@ pub fn unit_add_assign(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 #[proc_macro_derive(UnitSub)]
@@ -66,6 +76,11 @@ pub fn unit_sub(input: TokenStream) -> TokenStream {
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
 
+    let gen = impl_unit_sub(&ast);
+    gen.parse().unwrap()
+}
+    
+fn impl_unit_sub(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::Sub for #name {
@@ -83,7 +98,7 @@ pub fn unit_sub(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 #[proc_macro_derive(UnitSubAssign)]
@@ -94,6 +109,11 @@ pub fn unit_sub_assign(input: TokenStream) -> TokenStream {
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
 
+    let gen = impl_unit_sub_assign(&ast);
+    gen.parse().unwrap()
+}
+
+fn impl_unit_sub_assign(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::SubAssign for #name {
@@ -108,7 +128,7 @@ pub fn unit_sub_assign(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 #[proc_macro_derive(UnitMul)]
@@ -118,7 +138,12 @@ pub fn unit_mul(input: TokenStream) -> TokenStream {
     
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
+    
+    let gen = impl_unit_mul(&ast);
+    gen.parse().unwrap()
+}
 
+fn impl_unit_mul(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::Mul for #name {
@@ -136,7 +161,7 @@ pub fn unit_mul(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 #[proc_macro_derive(UnitMulAssign)]
@@ -147,6 +172,11 @@ pub fn unit_mul_assign(input: TokenStream) -> TokenStream {
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
 
+    let gen = impl_unit_mul_assign(&ast);
+    gen.parse().unwrap()
+}
+
+fn impl_unit_mul_assign(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::MulAssign for #name {
@@ -161,7 +191,7 @@ pub fn unit_mul_assign(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 #[proc_macro_derive(UnitDiv)]
@@ -172,6 +202,11 @@ pub fn unit_div(input: TokenStream) -> TokenStream {
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
 
+    let gen = impl_unit_div(&ast);
+    gen.parse().unwrap()
+}
+
+fn impl_unit_div(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::Div for #name {
@@ -189,7 +224,7 @@ pub fn unit_div(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 #[proc_macro_derive(UnitDivAssign)]
@@ -200,6 +235,11 @@ pub fn unit_div_assign(input: TokenStream) -> TokenStream {
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
 
+    let gen = impl_unit_div_assign(&ast);
+    gen.parse().unwrap()
+}
+
+fn impl_unit_div_assign(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::DivAssign for #name {
@@ -214,7 +254,7 @@ pub fn unit_div_assign(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 #[proc_macro_derive(UnitRem)]
@@ -224,7 +264,11 @@ pub fn unit_rem(input: TokenStream) -> TokenStream {
     
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
+    let gen = impl_unit_rem(&ast);
+    gen.parse().unwrap()
+}
 
+fn impl_unit_rem(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::Rem for #name {
@@ -242,7 +286,7 @@ pub fn unit_rem(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
 
@@ -253,7 +297,11 @@ pub fn unit_neg(input: TokenStream) -> TokenStream {
     
     // Parse the string representation
     let ast = syn::parse_macro_input(&s).unwrap();
+    let gen = impl_unit_neg(&ast);
+    gen.parse().unwrap()
+}
 
+fn impl_unit_neg(ast: &syn::MacroInput) -> quote::Tokens {
     let name = &ast.ident;
     let quote = quote! {
         impl std::ops::Neg for #name {
@@ -271,20 +319,29 @@ pub fn unit_neg(input: TokenStream) -> TokenStream {
             }
         }
     };
-    quote.parse().unwrap()
+    quote
 }
 
+#[proc_macro_derive(UnitOps)]
+pub fn unit_ops(input: TokenStream) -> TokenStream {
+    let s = input.to_string();
+    let ast:() = syn::parse_macro_input(&s).unwrap();
+    
+    let mut tokens = impl_unit_add(&ast);
+    tokens.append(impl_unit_add_assign(&ast));
+    
+    tokens.append(impl_unit_sub(&ast));
+    tokens.append(impl_unit_sub_assign(&ast));
+    
+    tokens.append(impl_unit_mul(&ast));
+    tokens.append(impl_unit_mul_assign(&ast));
+    
+    tokens.append(impl_unit_div(&ast));
+    tokens.append(impl_unit_div_assign(&ast));
+    
+    tokens.append(impl_unit_rem(&ast));
 
+    tokens.append(impl_unit_neg(&ast));
 
-
-// This panicks, figure out why it doesn't work.
-#[proc_macro_derive(UnitAll)]
-pub fn unit_all(input: TokenStream) -> TokenStream {
-    let add = unit_add(input);
-    let sub = unit_sub(add);
-    let mul = unit_mul(sub);
-    let div = unit_div(mul);
-    let rem = unit_rem(div);
-    let neg = unit_neg(rem);
-    neg
+    tokens.parse().unwrap()
 }
