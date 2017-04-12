@@ -325,7 +325,7 @@ fn impl_unit_neg(ast: &syn::MacroInput) -> quote::Tokens {
 #[proc_macro_derive(UnitOps)]
 pub fn unit_ops(input: TokenStream) -> TokenStream {
     let s = input.to_string();
-    let ast:() = syn::parse_macro_input(&s).unwrap();
+    let ast = syn::parse_macro_input(&s).unwrap();
     
     let mut tokens = impl_unit_add(&ast);
     tokens.append(impl_unit_add_assign(&ast));
