@@ -322,6 +322,23 @@ fn impl_unit_neg(ast: &syn::MacroInput) -> quote::Tokens {
     quote
 }
 
+fn get_neg_types() -> Vec<syn::Ident> {
+    let type_str = ["i8", "i16", "i32", "i64", "i128",
+                    "isize", "f32", "f64", "f128"];
+    type_str.iter().map(|&x| syn::Ident::from(x)).collect()
+}
+
+#[proc_macro_derive(UnitSum)]
+pub fn unit_sum(input: TokenStream) -> TokenStream {
+    // Construct a string representation of the type definition
+    let s = input.to_string();
+    
+    // Parse the string representation
+    let ast = syn::parse_macro_input(&s).unwrap();
+    let gen = impl_unit_neg(&ast);
+    gen.parse().unwrap()
+}
+
 #[proc_macro_derive(UnitOps)]
 pub fn unit_ops(input: TokenStream) -> TokenStream {
     let s = input.to_string();
@@ -341,7 +358,14 @@ pub fn unit_ops(input: TokenStream) -> TokenStream {
     
     tokens.append(impl_unit_rem(&ast));
 
-    tokens.append(impl_unit_neg(&ast));
+    if let &syn::Body::Struct(syn::VariantData::Tuple(ref field_vec)) = &ast.body {
+        if let syn::Ty::Path(_, ref path) = field_vec[0].ty {
+            let ident = &path.segments[0].ident;
+            if get_neg_types().contains(ident) {
+                tokens.append(impl_unit_neg(&ast));
+            }
+        }
+    }
 
     tokens.parse().unwrap()
 }
